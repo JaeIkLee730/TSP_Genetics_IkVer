@@ -15,6 +15,8 @@ public class Main{
 		Integer[][] weightData = new Integer[numOfCity][numOfCity] ;
 
 		ArrayList<Generation> genList = new ArrayList<Generation>();
+
+		ShowDataCli sdc = new ShowDataCli();		
 		
 		try{
 
@@ -28,7 +30,7 @@ public class Main{
 
 			Generation generation = new Generation() ;
 
-			generation.setGeneration( sequences, weightData );
+			generation.setGeneration( sequences );
 		   	/*for( int i=0; i<GV.numOfCity; i++ ){
 
 				for( int j=0; j<GV.numOfCity; j++)
@@ -38,7 +40,8 @@ public class Main{
 
 			}*/
 
-		
+			sdc.showSumMin( generation ) ;			
+	
 		}catch(Exception e){
 
 			System.out.println("File Name Error");

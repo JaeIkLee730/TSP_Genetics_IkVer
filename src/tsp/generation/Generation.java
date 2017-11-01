@@ -7,7 +7,9 @@ public class Generation{
 
 	protected ArrayList<Path> paths = new ArrayList<Path>();
 
-	protected Integer Weight = 0;
+	protected Integer sumOfPathWeight = 0;
+
+	protected Integer minPathWeight = 0;
 
 	public Generation(){}
 
@@ -17,14 +19,54 @@ public class Generation{
 
 	}
 
-	public void setGeneration( Integer[][] wd){
+	public void setGeneration( Sequences sq ){
+
+		paths = sq.getPaths() ;		
+		setSumOPW() ;	
+		findMinPW() ;
+	}
+
+	private void setSumOPW(){
+
+		Integer temp = 0 ;
+
+		for( int i=0; i<paths.size(); i++ )
+			temp += paths.get(i).getPathWeight();
+
+		sumOfPathWeight = temp;
 
 	}
 
-	public void setGeneration( Sequences sq, Integer[][] wd ){
+	private void findMinPW(){
 
-		paths = sq.getPaths();		
+		Integer minTemp = paths.get(0).getPathWeight() ;
+
+		for( int i=0; i<paths.size(); i++ ){
+
+			if( minTemp > paths.get(i).getPathWeight() )
+				minTemp = paths.get(i).getPathWeight() ;
+		
+		}
+
+		minPathWeight = minTemp ;
 
 	}
 
+	public ArrayList<Path> getPaths(){
+
+		return paths ;
+
+	}
+
+    public Integer getSumOPW(){
+
+		return sumOfPathWeight ;
+
+	}
+
+	public Integer getMinPW(){
+
+		return minPathWeight ;
+
+	}
 }
