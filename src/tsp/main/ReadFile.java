@@ -1,4 +1,4 @@
-package main ;
+package tsp.main ;
 
 import java.awt.* ;
 import java.util.* ;
@@ -6,6 +6,7 @@ import java.io.* ;
 
 public class ReadFile{
 
+    private static final int numOfCity = 48;
 	// raw data -> one line String the words seperated by " "
 	public static String read ( final String fileName ) throws IOException{
 
@@ -33,7 +34,7 @@ public class ReadFile{
 	// one line data to 2-dimensional int array
 	public static Integer[][] toArr( String str ){
 		
-		Integer arr[][] = new Integer[GV.numOfCity][GV.numOfCity] ;
+		Integer arr[][] = new Integer[numOfCity][numOfCity] ;
 	
 		int row = 0 ;
 			
@@ -92,7 +93,7 @@ public class ReadFile{
             if(sub[i] == null)
                 sub[i] = "0";
 
-            System.out.println(sub[i]+"\n");
+//            System.out.println(sub[i]+"\n");
 
             oneRowArr[i] = Integer.parseInt(sub[i]);
             

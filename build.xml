@@ -20,7 +20,7 @@
 	</target>
 
 	<target name="run" depends="build">
-		<java classname="main.Main" fork="true" dir="." maxmemory="4096m">
+		<java classname="tsp.main.Main" fork="true" dir="." maxmemory="4096m">
 			<arg file="data/gr48.tsp"/>
 			<classpath refid="lib.path"/>
 			<classpath location="."/>
