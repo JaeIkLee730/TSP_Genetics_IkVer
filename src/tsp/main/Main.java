@@ -1,6 +1,7 @@
 package tsp.main;
 
 import tsp.generation.* ;
+import tsp.evolution.* ;
 import java.awt.* ;
 import java.util.* ;
 
@@ -14,10 +15,14 @@ public class Main{
 
 		Integer[][] weightData = new Integer[numOfCity][numOfCity] ;
 
-		ArrayList<Generation> genList = new ArrayList<Generation>();
+		ArrayList<Sequences> seqList = new ArrayList<Sequences>() ;
 
+		ArrayList<Generation> genList = new ArrayList<Generation>() ;		
 		ShowDataCli sdc = new ShowDataCli();		
 		
+		// TODO constructor
+		Evolution ev = new Evolution() ;		
+
 		try{
 
 			str = ( ReadFile.read(args[0]) );
@@ -25,23 +30,32 @@ public class Main{
 			weightData = ReadFile.toArr(str) ;
 
 			Sequences sequences = new Sequences();
-
 			sequences.setSequence( weightData ) ;
+			// seqList.add(sequences) ;
 
-			Generation generation = new Generation() ;
+			// the first generation
+            Generation generation = new Generation() ;     
+            generation.setGeneration( sequences );
+            genList.add(generation) ;
 
-			generation.setGeneration( sequences );
-		   	/*for( int i=0; i<GV.numOfCity; i++ ){
+            sdc.showSumMin( generation ) ;          
 
-				for( int j=0; j<GV.numOfCity; j++)
-					System.out.print(arr[i][j] + " ") ;
+			// start evolution
+			for( int i=0; i<100; i++ ){
+				
+				Sequences advancedSq = new Sequences() ;
+				advancedSq = ev.evolute(sequences) ;
+				// seqList.add(advancedSq) ;
+				// does it disappears when it gets out of the block?
+				
+				Generation generation2 = new Generation() ;
+				generation.setGeneration( advancedSq );
+				genList.add(generation) ;				
 
-				System.out.println();
-
-			}*/
-
-			sdc.showSumMin( generation ) ;			
+				sdc.showSumMin( generation ) ;			
 	
+			}
+
 		}catch(Exception e){
 
 			System.out.println("File Name Error");

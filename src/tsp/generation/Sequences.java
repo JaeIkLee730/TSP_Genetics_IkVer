@@ -8,6 +8,7 @@ public class Sequences{
 	private static final int numOfCity = 48;
 
 	protected ArrayList<Path> paths = new ArrayList<Path>() ;
+	// paths : consist of 100 paths
 
 	public Sequences(){}
 
@@ -26,6 +27,12 @@ public class Sequences{
 
 			}
 		}	
+
+	}
+
+	public void setSequence ( ArrayList<Path> pathList ){
+
+		paths = pathList ;
 
 	}
 
