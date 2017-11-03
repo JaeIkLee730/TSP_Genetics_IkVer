@@ -6,8 +6,9 @@
 	<property name="doc" value="doc"/> 
 
 	<path id="lib.path">
-		<pathelement location="${build}" />
-		<pathelement location="${lib}/jfreechart-1.0.19.jar" />
+		<pathelement location="${build}"/>
+		<pathelement location="${lib}/jfreechart-1.0.19.jar"/>
+		<pathelement location="${lib}/jcommon-1.0.23.jar"/>
 	</path>
 
 	<target name="init">

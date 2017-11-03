@@ -8,9 +8,13 @@ public class CrossOver{
 
 	public CrossOver(){}
 
-	public Path crossOver( Path path ){
+	// which two are participating?
+	public ArrayList<Path> crossOver( ArrayList<Path> pathList ){
 
-		return path ;
+		
+
+		
+		return pathList ;
 
 	}	
 

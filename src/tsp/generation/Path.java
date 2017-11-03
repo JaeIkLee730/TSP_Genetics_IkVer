@@ -25,6 +25,12 @@ public class Path{
 
 	}
 
+	public void setPath( Integer [] arr ){
+
+		nodeSequence = arr ;
+
+	}
+
 	public void setPath( Integer [] arr, Integer[][] wd ){
 
 		nodeSequence = arr;
@@ -52,6 +58,17 @@ public class Path{
 	public Integer getPathWeight(){
 
 		return pathWeight;
+
+	}
+
+	public int compareTo( Path arg ){
+	
+		if( pathWeight > arg.getPathWeight() )
+			return 1 ;
+		else if ( pathWeight < arg.getPathWeight() )
+			return -1 ;
+		else
+			return 0 ;
 
 	}
 

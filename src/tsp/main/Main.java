@@ -1,5 +1,6 @@
 package tsp.main;
 
+import tsp.gui.* ;
 import tsp.generation.* ;
 import tsp.evolution.* ;
 import java.awt.* ;
@@ -20,8 +21,9 @@ public class Main{
 		ArrayList<Generation> genList = new ArrayList<Generation>() ;		
 		ShowDataCli sdc = new ShowDataCli();		
 		
-		// TODO constructor
 		Evolution ev = new Evolution() ;		
+
+		ShowHistogram sh = new ShowHistogram();
 
 		try{
 
@@ -44,17 +46,20 @@ public class Main{
 			for( int i=0; i<100; i++ ){
 				
 				Sequences advancedSq = new Sequences() ;
-				advancedSq = ev.evolute(sequences) ;
-				// seqList.add(advancedSq) ;
+				advancedSq = ev.evolute( sequences, weightData ) ;
+				System.out.println(" evolution " + i);
+
 				// does it disappears when it gets out of the block?
 				
 				Generation generation2 = new Generation() ;
 				generation.setGeneration( advancedSq );
 				genList.add(generation) ;				
 
-				sdc.showSumMin( generation ) ;			
+				sdc.showSumMin( genList.get(i) ) ;			
 	
 			}
+
+			sh.show(genList) ;
 
 		}catch(Exception e){
 
