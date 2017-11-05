@@ -30,10 +30,35 @@ public class Sequences{
 
 	}
 
+    public void setSequence( Integer[][] wd, int n ){
+
+        for(int i = 0;i<n; i++){
+        // create n of paths  
+
+            try{
+
+                paths.add( randPath(numOfCity, wd) );
+
+            }catch(Exception e){
+
+                e.printStackTrace();
+
+            }
+        }
+
+    }
+
 	public void setSequence ( ArrayList<Path> pathList ){
 
 		paths = pathList ;
 
+	}
+
+ 	public void sequenceCat( Sequences arg ){
+
+		for(int i=0; i<arg.getPaths().size(); i++ )
+			paths.add( arg.getPaths().get(i) ) ;
+	
 	}
 
 	public ArrayList<Path> getPaths(){

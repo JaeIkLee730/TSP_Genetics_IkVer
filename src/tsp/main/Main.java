@@ -10,6 +10,9 @@ public class Main{
 
     private static final int numOfCity = 48;
 
+	private static final int evolveTimes = 10000 ;
+
+
 	public static void main( String[] args ){
 
 		String str = "" ;
@@ -33,7 +36,7 @@ public class Main{
 
 			Sequences sequences = new Sequences();
 			sequences.setSequence( weightData ) ;
-			// seqList.add(sequences) ;
+			seqList.add(sequences) ;
 
 			// the first generation
             Generation generation = new Generation() ;     
@@ -43,23 +46,24 @@ public class Main{
             sdc.showSumMin( generation ) ;          
 
 			// start evolution
-			for( int i=0; i<100; i++ ){
-				
-				Sequences advancedSq = new Sequences() ;
-				advancedSq = ev.evolute( sequences, weightData ) ;
+			for( int i=0; i<evolveTimes; i++ ){
+	
+				Sequences newSq = new Sequences() ;
+				newSq = ev.evolute( seqList.get(i), weightData ) ;
+				seqList.add(newSq) ;
 				System.out.println(" evolution " + i);
 
 				// does it disappears when it gets out of the block?
 				
 				Generation generation2 = new Generation() ;
-				generation.setGeneration( advancedSq );
+				generation.setGeneration( newSq );
 				genList.add(generation) ;				
 
 				sdc.showSumMin( genList.get(i) ) ;			
 	
 			}
 
-			sh.show(genList) ;
+//			sh.show(genList) ;
 
 		}catch(Exception e){
 

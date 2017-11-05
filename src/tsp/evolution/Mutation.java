@@ -10,7 +10,7 @@ public class Mutation{
 
 	private static final int mutNum = 20 ;
 
-	private static final int crossOveredNum = 40 ; 
+	private static final int CONUM = 40 ; 
 
 	private int howMany = (int)(Math.random()*(numOfCity-3))+3;
 	 	// n : how many node will be relocated - random
@@ -21,9 +21,6 @@ public class Mutation{
 
 	public Path [] mutation( ArrayList<Path> paths, Integer [][] wd ){
 
-		System.out.println(" Mut start ");
-		System.out.println(" howMany : " + howMany );
-
 		Path [] pathListTemp = new Path[40] ;
 
 		Integer [] arr = new Integer[numOfCity] ;
@@ -32,7 +29,6 @@ public class Mutation{
 		Integer [] randNum = new Integer[howMany] ;
 		// which element will be mutated
 
-		System.out.println(" Mut ing 1 ");
 
 		for( int i=0; i<mutNum; i++ ) {
 
@@ -40,7 +36,7 @@ public class Mutation{
 			// the element determined randomly
 
 	//		System.out.println(" Mut ing 2 ");
-			arr = arrElemSwp( paths.get(i).getSequence(), randNum ) ;	
+			arr = arrElemSwp( paths.get(CONUM + i).getSequence(), randNum ) ;	
 
 	//		System.out.println(" Mut ing 3 ");
 		
@@ -51,8 +47,6 @@ public class Mutation{
 			pathListTemp[i] = path;
 
 		}
-
-		System.out.println(" Mut End() ");
 
 		return pathListTemp ;
 

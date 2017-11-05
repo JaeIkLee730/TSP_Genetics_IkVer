@@ -15,7 +15,7 @@ public class Path{
 
 	public Path( Integer [] arr ){
 
-		nodeSequence = arr ;
+		nodeSequence = Arrays.copyOf(arr, arr.length) ;
 
 	}
 
@@ -44,6 +44,12 @@ public class Path{
 		return nodeSequence ;
 
 	}
+
+    public Integer getSequence( int n ){
+
+        return nodeSequence[n] ;
+
+    }
 
 	private void setPathWeight( Integer[][] wd ){
 

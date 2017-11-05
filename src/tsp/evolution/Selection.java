@@ -6,23 +6,21 @@ import java.util.* ;
 
 public class Selection{
 
-	private final int half = 50 ;
+	private final int randSel = 30 ;
+
+	private final int topSel = 70 ;
 
 	public Selection(){}
 
 	public ArrayList<Path> selection( ArrayList<Path> pathList ){
-
+		
 	// pathList now have totally 200 paths
 
 		ArrayList<Path> pathListTemp = new ArrayList<Path>() ;
 
-		ArrayList<Path> pathListTempSub = new ArrayList<Path>() ;
-
-		Integer [] randNum = new Integer[half] ;
+		Integer [] randNum = new Integer[randSel] ;
 
 		Integer listSize = pathList.size() ;
-
-	//	Arrays.sort( pathList ) ;
 
 	    Collections.sort( pathList, new Comparator<Path>() {
 
@@ -38,59 +36,25 @@ public class Selection{
       		}
    		});
 
-		for( int i=listSize-1; i>=listSize-half; i-- ){
+		// top n of list
+		for( int i=listSize-1; i>=listSize-topSel; i-- ){
 
 			pathListTemp.add(pathList.get(i)) ;
 
 		}
+		
+		RandOrder rnd = new RandOrder() ;
 
-/*
-    	for( int i=0; i<pathList.size(); i++){
-            System.out.print("path " + (i+1) + " : ") ;
-            System.out.println(pathList.get(i).getPathWeight() );
-        }
-*/
-		randNum = randNumForSel(listSize);
+		randNum = Arrays.copyOf( rnd.randOrder(listSize-topSel, randSel), randSel );
 
-		for( int i=0; i<50; i++ ){
+		for( int i=0; i<randSel; i++ ){
 
 			pathListTemp.add( pathList.get(randNum[i]) ) ;
 
 		}
-/*
-		for( int i=0; i<pathListTemp.size(); i++){
-			System.out.print("path " + (i+1) + " : ") ;
-			System.out.println(pathListTemp.get(i).getPathWeight() );
-		}
-*/
 
 		return pathListTemp ;
 
 	}
-
-    private Integer [] randNumForSel( int ls ){
-
-        Integer [] randNum = new Integer[half] ;
-
-        for(int i = 0; i < half; i++){
-
-            randNum[i] = (int)(Math.random()*(ls-half)) ;
-            // random element-index
-
-            // avoid the same index number
-            for(int j = 0; j < i; j++){
-
-                if( randNum[i] == randNum[j] ) {
-                    i-- ;
-                    break;
-                }
-
-            }
-
-        }
-
-        return randNum ;
-
-    }
 
 }
