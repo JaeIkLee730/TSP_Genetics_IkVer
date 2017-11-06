@@ -5,15 +5,32 @@ import tsp.generation.* ;
 import tsp.evolution.* ;
 import java.awt.* ;
 import java.util.* ;
+import java.io.* ;
+import org.apache.commons.configuration.* ;
+import org.apache.commons.lang.* ;
+
 
 public class Main{
 
-    private static final int numOfCity = 48;
+//	static Configuration config = new PropertiesConfiguration(configFilePath) ;
 
-	private static final int evolveTimes = 10000 ;
+//	static Properties prop = new Properties();
 
+//	static FileInputStream fis = new FileInputStream("config.properties");
 
-	public static void main( String[] args ){
+	static PropertiesConfiguration config ; 
+    static String configFilePath = "config.properties" ;
+
+	public static void main( String[] args ) {
+
+//		prop.load(fis);
+//		fis.close();
+//		prop.list(System.out); // 서울의수도=서울에수도가어디있어
+
+		config(configFilePath) ;  // read config file into Pr-config- object
+
+   		final int numOfCity = config.getInt("number_of_cities") ;
+		final int evolveTimes = config.getInt("how_many_time_evolves") ;
 
 		String str = "" ;
 
@@ -72,5 +89,21 @@ public class Main{
 		}
 
 	}
+
+	public static void config(String fpath) {
+
+		try {
+			config = new PropertiesConfiguration(fpath) ;
+		
+		}catch (ConfigurationException e) {
+
+			System.err.println(e) ;
+			System.exit(1) ;
+
+		}
+
+	}
+
+
 
 }
