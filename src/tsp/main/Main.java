@@ -8,24 +8,38 @@ import java.util.* ;
 import java.io.* ;
 import org.apache.commons.configuration.* ;
 import org.apache.commons.lang.* ;
-
+import org.apache.commons.cli.* ;
 
 public class Main{
-
-//	static Configuration config = new PropertiesConfiguration(configFilePath) ;
-
-//	static Properties prop = new Properties();
-
-//	static FileInputStream fis = new FileInputStream("config.properties");
 
 	static PropertiesConfiguration config ; 
     static String configFilePath = "config.properties" ;
 
+    static boolean isToShowMin = true ;
+    static boolean isToShowSumMin = true ;
+
 	public static void main( String[] args ) {
 
-//		prop.load(fis);
-//		fis.close();
-//		prop.list(System.out); // 서울의수도=서울에수도가어디있어
+        Options options = new Options() ; // commons.cli.Options, 
+
+        options.addOption("m", "min", false, "min weight") ;
+        // shortly "-c", fully "--min"
+        options.addOption("s", "sum", false, "sum of weight") ;
+
+        CommandLineParser parser = new DefaultParser() ;  // parse the commandline argument
+        CommandLine cmd = null ;      // setting about which option we got
+
+        try {
+            cmd = parser.parse(options, args) ;
+            if (cmd.hasOption("m"))      // display the statistics
+                isToShowMin = true ;
+            if (cmd.hasOption("s"))
+				isToShowSumMin = true ;
+        }
+        catch (ParseException e) {
+            System.err.println(e) ;
+            System.exit(1) ;
+        }
 
 		config(configFilePath) ;  // read config file into Pr-config- object
 
@@ -39,9 +53,9 @@ public class Main{
 		ArrayList<Sequences> seqList = new ArrayList<Sequences>() ;
 
 		ArrayList<Generation> genList = new ArrayList<Generation>() ;		
-		ShowDataCli sdc = new ShowDataCli();		
+		ShowData sdc= new ShowData();		
 		
-		Evolution ev = new Evolution() ;		
+		Evolution ev = new Evolution( config ) ;		
 
 		ShowHistogram sh = new ShowHistogram();
 
@@ -60,7 +74,7 @@ public class Main{
             generation.setGeneration( sequences );
             genList.add(generation) ;
 
-            sdc.showSumMin( generation ) ;          
+            sdc.showSumMin( generation, isToShowMin, isToShowSumMin ) ;          
 
 			// start evolution
 			for( int i=0; i<evolveTimes; i++ ){
@@ -68,7 +82,6 @@ public class Main{
 				Sequences newSq = new Sequences() ;
 				newSq = ev.evolute( seqList.get(i), weightData ) ;
 				seqList.add(newSq) ;
-				System.out.println(" evolution " + i);
 
 				// does it disappears when it gets out of the block?
 				
@@ -76,8 +89,11 @@ public class Main{
 				generation.setGeneration( newSq );
 				genList.add(generation) ;				
 
-				sdc.showSumMin( genList.get(i) ) ;			
-	
+				if( i%100==0 ){
+					sdc.showSumMin( genList.get(i), isToShowMin, isToShowSumMin ) ;			
+				//	System.out.println(" evolution " + i );
+				}
+
 			}
 
 //			sh.show(genList) ;

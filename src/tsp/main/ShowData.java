@@ -4,7 +4,7 @@ import tsp.generation.* ;
 import java.awt.* ;
 import java.util.* ;
 
-public class ShowDataCli{
+public class ShowData{
 
 	public void showAll( Generation gen ){
 
@@ -22,11 +22,13 @@ public class ShowDataCli{
 		
 	}
 
-	public void showSumMin( Generation gen ) {
+	public void showSumMin( Generation gen, boolean showMin, boolean showSum ) {
 
-		System.out.println("minimum path weight : " + gen.getMinPW() );
+		if( showMin )
+			System.out.println("minimum path weight : " + gen.getMinPW() );
 
-        System.out.println("sum of path weight : " + gen.getSumOPW() );
+		if( showSum )
+	        System.out.println("sum of path weight : " + gen.getSumOPW() );
 
 	}
 

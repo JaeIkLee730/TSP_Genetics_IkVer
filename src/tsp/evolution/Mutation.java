@@ -3,23 +3,27 @@ package tsp.evolution ;
 import tsp.generation.* ;
 import java.awt.* ;
 import java.util.* ;
+import org.apache.commons.configuration.* ;
+import org.apache.commons.lang.* ;
 
 public class Mutation{
 
 	private static final int numOfCity = 48 ;
-
-	private static final int mutNum = 20 ;
-
-	private static final int CONUM = 40 ; 
-
+	private PropertiesConfiguration config ;
 	private int howMany = (int)(Math.random()*(numOfCity-3))+3;
 	 	// n : how many node will be relocated - random
 		// numOfCity-3 : 0-45 range + 3 -> 3-48 range
 		// avoid the case howMany is not enough
 
 	public Mutation(){}
+	public Mutation( PropertiesConfiguration config ){
+		this.config = config ;
+	}
 
 	public Path [] mutation( ArrayList<Path> paths, Integer [][] wd ){
+
+		final int MUNUM = config.getInt( "Mutation_Num" ) ;
+		final int CONUM = config.getInt( "Cross_Over_Num" ); 
 
 		Path [] pathListTemp = new Path[40] ;
 
@@ -30,7 +34,7 @@ public class Mutation{
 		// which element will be mutated
 
 
-		for( int i=0; i<mutNum; i++ ) {
+		for( int i=0; i<MUNUM; i++ ) {
 
 			randNum = randNumForMut() ;
 			// the element determined randomly

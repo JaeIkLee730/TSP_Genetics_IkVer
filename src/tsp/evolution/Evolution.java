@@ -3,28 +3,35 @@ package tsp.evolution ;
 import tsp.generation.* ;
 import java.awt.* ;
 import java.util.* ;
+import org.apache.commons.configuration.* ;
+import org.apache.commons.lang.* ;
 
 public class Evolution{
 
 
-	private final int numOfCity = 48 ;
+	private static final int numOfCity = 48 ;
+    private PropertiesConfiguration config ;
 
-	private final int CONUM = 40 ;
-	private final int MUNUM = 20 ;
-	private final int IMMNUM = 40 ;
 	// constructor
 	public Evolution(){}
+	public Evolution( PropertiesConfiguration config ){
+		this.config = config ;
+	}
 
 	public Sequences evolute( Sequences sq, Integer [][] wd ){
-		
+
+	 	final int CONUM = config.getInt( "Cross_Over_Num" ) ;
+	 	final int MUNUM = config.getInt( "Mutation_Num" ) ;
+	 	final int IMMNUM = config.getInt( "Immigration_Num" ) ;
+
 		Sequences prevSq = new Sequences() ;
 		Sequences newSq = new Sequences() ;
 
-		CrossOver co = new CrossOver() ;
-		Mutation mu = new Mutation() ;
-		Immigration imm = new Immigration() ;
-		Selection sel = new Selection() ;
-			
+		CrossOver co = new CrossOver( config ) ;
+		Mutation mu = new Mutation( config ) ;
+		Immigration imm = new Immigration( config ) ;
+		Selection sel = new Selection( config ) ;
+
 		prevSq = sq;
 
 		ArrayList<Path> pathList = new ArrayList<Path>() ;
@@ -52,10 +59,15 @@ public class Evolution{
 		for( int i=0; i<prevSq.getPaths().size(); i++)
 			pathList.add( prevSq.getPaths().get(i) ) ;
 		// totally we have 200 paths
+		
+//		ArrayList<Path> selectedPaths = new ArrayList<Path>() ;
+//		selectedPaths = sel.selection(pathList) ;
+//		Collections.shuffle( selectedPaths ) ;
 
-		newSq.setSequence( (sel.selection( pathList )) ) ;
+//		newSq.setSequence( selectedPaths ) ;
 		// select top 50 paths and random 50 paths 
 
+		newSq.setSequence( sel.selection(pathList) ) ;
 		return newSq ;
 		
 	}

@@ -3,19 +3,27 @@ package tsp.evolution ;
 import tsp.generation.* ;
 import java.awt.* ;
 import java.util.* ;
+import java.io.* ;
+import org.apache.commons.configuration.* ;
+import org.apache.commons.lang.* ;
 
 public class CrossOver{
 
-	private final int howMany = 20 ;
-	// how many element would be selected at the first time
-	private final int CONUM = 40 ;
-	private final int numOfCity = 48 ;
+    private PropertiesConfiguration config ;
 
 	public CrossOver(){}
+	public CrossOver( PropertiesConfiguration config ){
+		this.config = config ;
+	}
 
 	// which two are participating?
 	public Path [] crossOver( ArrayList<Path> pathList, Integer[][] wd){
-		
+	
+		// how many element would be selected at the first time
+		final int CONUM = config.getInt("Cross_Over_Num");
+        final int numOfCity = config.getInt("number_of_cities") ;
+		final int howMany = config.getInt("how_many_is_corssOver_half") ;
+
 		Path [] pathListTemp = new Path[CONUM] ;
 		Integer [] randNum = new Integer[howMany] ;
 		Integer [] pathTemp = new Integer[numOfCity] ;
@@ -52,40 +60,9 @@ public class CrossOver{
 
 	}
 
-
-/*
-	private Integer [] randNumForCo(){
-
-        Integer [] randNum = new Integer[howMany] ;
-
-        for(int i = 0; i < howMany; i++){
-   
-            randNum[i] = (int)(Math.random()*(numOfCity));
-	        System.out.println("randNum : " + randNum[i]) ;
-
-            // random element-index
-
-            // avoid the same index number
-            for(int j = 0; j < i; j++){
-
-                if( randNum[i] == randNum[j] ) {
-                    i-- ;
-                    break;
-                }
-
-            }
-
-        }
-       	System.out.println("~randNum()") ;
-
-        return randNum ;
-
-    }
-*/
-
-
 	private boolean isNotExist( Integer [] pathTemp, Integer n ){
 
+		final int howMany = config.getInt("how_many_is_corssOver_half") ;
 		boolean notExist = true ;
 
 		for( int i=0; i<howMany; i++){
